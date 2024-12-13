@@ -3,18 +3,20 @@
 # User executing this script must have Privilege Authentication Administrator role
 # This script currently requires a client machine using PowerShell console.
 
-#Installing AzureAD Module - Only need do this once
-#https://learn.microsoft.com/en-us/powershell/azure/active-directory/overview?view=azureadps-2.0
-#if (-not(get-module -Name AzureAD)) {
-#   Install-Module -Name AzureAD
-#}
-
 #Installing MgGraph Module - Only need to do this once
 if (-not(get-Module -Name Microsoft.Graph.Identity.Signins)) {
     Write-Host -NoNewLine "Installing Microsoft.Graph.Identity.Signins module"
     Install-Module -Name Microsoft.Graph.Identity.Signins -Force
     Import-Module Microsoft.Graph.Identity.Signins
 }
+
+#Install additional modules
+if (-not(get-Module -Name Microsoft.Graph.Identity.DirectoryManagement)) {
+    Write-Host -NoNewLine "Installing Microsoft.Graph.Identity.DirectoryManagement module"
+    Install-Module -Name Microsoft.Graph.Identity.DirectoryManagement -Force
+    Import-Module Microsoft.Graph.Identity.DirectoryManagement
+}
+
 Write-Host "Beginning script to load EntrustPKI CA Certificates to Entra ID"
 
 #region parameters
